@@ -1,4 +1,4 @@
-# ShopKart — Smart E-Commerce Order Management Platform
+# ShopKart Smart E-Commerce Order Management Platform
 
 A microservices-based e-commerce backend built with Spring Boot, Apache Kafka, Docker, and PostgreSQL. Designed to demonstrate real-world distributed systems architecture including event-driven communication, service-to-service HTTP calls, and JWT authentication.
 
