@@ -1,6 +1,8 @@
 package com.shopkart.clothwear.service;
 
 import com.shopkart.clothwear.dto.AuthDto;
+import com.shopkart.clothwear.exception.EmailAlreadyExistsException;
+import com.shopkart.clothwear.exception.InvalidCredentialsException;
 import com.shopkart.clothwear.model.User;
 import com.shopkart.clothwear.repository.UserRepository;
 import com.shopkart.clothwear.security.JwtUtil;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+//tells service this class contains business logic
 @RequiredArgsConstructor
 public class AuthService {
 
@@ -17,8 +20,9 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     public AuthDto.AuthResponse register(AuthDto.RegisterRequest request) {
+        // Throws 409 Conflict via GlobalExceptionHandler
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered: " + request.getEmail());
+            throw new EmailAlreadyExistsException(request.getEmail());
         }
 
         User user = User.builder()
@@ -29,17 +33,17 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
-
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
         return new AuthDto.AuthResponse(token, user.getEmail(), user.getName(), user.getRole());
     }
 
     public AuthDto.AuthResponse login(AuthDto.LoginRequest request) {
+        // Throws 401 Unauthorized via GlobalExceptionHandler
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found with email: " + request.getEmail()));
+                .orElseThrow(InvalidCredentialsException::new);
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new InvalidCredentialsException();
         }
 
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
