@@ -1,13 +1,17 @@
-// import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
-  return (
-      <div>
-        <h1>ShopKart</h1>
-        <p>Welcome to our store</p>
-      </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
