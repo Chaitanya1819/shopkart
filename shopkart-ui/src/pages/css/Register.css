@@ -1,0 +1,104 @@
+/* Container */
+.register-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.register-title {
+    text-align: center;
+    color: #FF6B00;
+    margin-bottom: 1.5rem;
+}
+
+/* Server error box */
+.register-server-error {
+    background: #fee;
+    color: #c00;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+/* Form field wrapper */
+.register-field {
+    margin-bottom: 1rem;
+}
+
+/* Label */
+.register-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.4rem;
+}
+
+/* Input */
+.register-input {
+    width: 100%;
+    padding: 0.65rem;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.register-input:focus {
+    border-color: #FF6B00;
+}
+
+/* Field error message */
+.register-field-error {
+    color: red;
+    font-size: 0.8rem;
+    margin: 0.25rem 0 0;
+}
+
+/* Submit button */
+.register-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #FF6B00;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.register-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.register-btn:hover:not(:disabled) {
+    background: #e05f00;
+}
+
+/* Bottom link */
+.register-switch {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.register-link {
+    color: #FF6B00;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
