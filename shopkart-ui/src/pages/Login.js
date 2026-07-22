@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const [serverError, setServerError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const validate = () => {
@@ -26,72 +29,99 @@ function Login() {
         return newErrors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setServerError('');
 
         const foundErrors = validate();
-
         if (Object.keys(foundErrors).length > 0) {
             setErrors(foundErrors);
             return;
         }
 
-        alert(`Login successful!\nEmail: ${email}`);
+        setLoading(true);
+        try {
+            const response = await fetch('http://localhost:8080/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userEmail', data.email);
+                localStorage.setItem('userName', data.name);
+                localStorage.setItem('userRole', data.role);
+                navigate('/products');
+            } else {
+                setServerError(data.message || 'Invalid email or password');
+            }
+
+        } catch (error) {
+            setServerError('Cannot connect to server. Make sure clothwear service is running on port 8080.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div style={{ maxWidth: '400px', margin: '100px auto', padding: '2rem', border: '1px solid #ddd', borderRadius: '10px' }}>
+        <div className="login-container">
 
-            <h2>ShopKart Login</h2>
+            <h2 className="login-title">ShopKart Login</h2>
+
+            {serverError && (
+                <div className="login-server-error">
+                    {serverError}
+                </div>
+            )}
 
             <form onSubmit={handleSubmit}>
 
-                <div style={{ marginBottom: '1rem' }}>
-                    <label>Email</label><br />
+                <div className="login-field">
+                    <label className="login-label">Email</label>
                     <input
                         type="text"
+                        className="login-input"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                        style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
+                        placeholder="chaitanya@test.com"
                     />
                     {errors.email && (
-                        <p style={{ color: 'red', fontSize: '0.8rem', margin: '0.25rem 0 0' }}>
-                            {errors.email}
-                        </p>
+                        <p className="login-field-error">{errors.email}</p>
                     )}
                 </div>
 
-                <div style={{ marginBottom: '1rem' }}>
-                    <label>Password</label><br />
+                <div className="login-field">
+                    <label className="login-label">Password</label>
                     <input
                         type="password"
+                        className="login-input"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
-                        style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
+                        placeholder="Your password"
                     />
                     {errors.password && (
-                        <p style={{ color: 'red', fontSize: '0.8rem', margin: '0.25rem 0 0' }}>
-                            {errors.password}
-                        </p>
+                        <p className="login-field-error">{errors.password}</p>
                     )}
                 </div>
 
                 <button
                     type="submit"
-                    style={{ width: '100%', padding: '0.75rem', background: '#FF6B00', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+                    className="login-btn"
+                    disabled={loading}
                 >
-                    Login
+                    {loading ? 'Logging in...' : 'Login'}
                 </button>
 
             </form>
 
-            <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.9rem' }}>
+            <p className="login-switch">
                 Don't have an account?{' '}
                 <span
+                    className="login-link"
                     onClick={() => navigate('/register')}
-                    style={{ color: '#FF6B00', cursor: 'pointer', fontWeight: '600' }}
                 >
                     Register here
                 </span>
