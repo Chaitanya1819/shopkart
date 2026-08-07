@@ -1,4 +1,4 @@
-package com.shopkart.order.exception;
+package com.shopkart.order_service.exception;
 
 public class ProductUnavailableException extends RuntimeException {
     public ProductUnavailableException(Long productId) {

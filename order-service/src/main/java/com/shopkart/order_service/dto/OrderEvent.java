@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-// This is what gets published to Kafka topic "order.placed"
-// Payment, Inventory, Notification services will receive this exact object
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,5 +18,5 @@ public class OrderEvent {
     private BigDecimal totalAmount;
     private String currency;
     private String status;
-    private LocalDateTime createdAt;
+    private String createdAt; // String instead of LocalDateTime — avoids Jackson serialization issues
 }

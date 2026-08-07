@@ -1,4 +1,4 @@
-package com.shopkart.order.client;
+package com.shopkart.order_service.client;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

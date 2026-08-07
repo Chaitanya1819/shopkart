@@ -1,4 +1,4 @@
-package com.shopkart.order.client;
+package com.shopkart.order_service.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

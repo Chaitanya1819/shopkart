@@ -1,4 +1,4 @@
-package com.shopkart.order.exception;
+package com.shopkart.order_service.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

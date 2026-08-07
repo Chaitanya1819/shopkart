@@ -99,7 +99,7 @@ public class OrderService {
                 .totalAmount(savedOrder.getTotalAmount())
                 .currency(savedOrder.getCurrency())
                 .status(savedOrder.getStatus().name())
-                .createdAt(savedOrder.getCreatedAt())
+                .createdAt(savedOrder.getCreatedAt().toString())
                 .build();
 
         orderEventPublisher.publishOrderPlaced(event);
