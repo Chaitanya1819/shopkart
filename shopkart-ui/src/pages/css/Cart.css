@@ -1,0 +1,242 @@
+/* Page wrapper */
+.cart-page {
+    padding: 1rem 2rem;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.cart-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FF6B00;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.cart-navbar-title {
+    color: #fff;
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.cart-navbar-right {
+    display: flex;
+    gap: 1rem;
+}
+
+.cart-nav-btn {
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #FF6B00;
+}
+
+.cart-nav-btn-outline {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Error */
+.cart-server-error {
+    background: #fee;
+    color: #c00;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+/* Loading */
+.cart-loading {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+/* Empty cart */
+.cart-empty {
+    text-align: center;
+    padding: 4rem;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.cart-shop-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    background: #FF6B00;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Cart content layout */
+.cart-content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* Cart items list */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Single cart item */
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.cart-item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-brand {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 1px;
+    margin: 0 0 0.25rem;
+}
+
+.cart-item-title {
+    font-size: 0.9rem;
+    color: #333;
+    margin: 0 0 0.4rem;
+}
+
+.cart-item-price {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+/* Remove button */
+.cart-remove-btn {
+    padding: 0.4rem 0.8rem;
+    background: #fee;
+    color: #c00;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.cart-remove-btn:hover {
+    background: #fcc;
+}
+
+/* Cart summary */
+.cart-summary {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 1rem;
+}
+
+.cart-summary-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 1rem;
+}
+
+.cart-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.75rem;
+}
+
+.cart-summary-total {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1a1a1a;
+    border-top: 1px solid #eee;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+/* Checkout button */
+.cart-checkout-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: #FF6B00;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.cart-checkout-btn:hover {
+    background: #e05f00;
+}
+
+/* Clear cart button */
+.cart-clear-btn {
+    width: 100%;
+    padding: 0.6rem;
+    background: #f5f5f5;
+    color: #666;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.cart-clear-btn:hover {
+    background: #eee;
+}
+
+/* Toast */
+.cart-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #333;
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    z-index: 999;
+}
