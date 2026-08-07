@@ -7,6 +7,7 @@ function Cart() {
     const [cart, setCart] = useState(null);
     const [loading, setLoading] = useState(true);
     const [serverError, setServerError] = useState('');
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const userEmail = localStorage.getItem('userEmail');
@@ -47,6 +48,50 @@ function Cart() {
         }
     };
 
+    // Remove single item from cart
+    const removeItem = async (productId) => {
+        try {
+            const response = await fetch(
+                `http://localhost:8082/api/cart/${userEmail}/item/${productId}`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                }
+            );
+
+            if (response.ok) {
+                setMessage('Item removed from cart');
+                fetchCart(); // Refresh cart
+                setTimeout(() => setMessage(''), 3000);
+            }
+
+        } catch (error) {
+            setServerError('Failed to remove item.');
+        }
+    };
+
+    // Clear entire cart
+    const clearCart = async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:8082/api/cart/${userEmail}/clear`,
+                {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                }
+            );
+
+            if (response.ok) {
+                setMessage('Cart cleared');
+                fetchCart();
+                setTimeout(() => setMessage(''), 3000);
+            }
+
+        } catch (error) {
+            setServerError('Failed to clear cart.');
+        }
+    };
+
     // Loading state
     if (loading) {
         return <div className="cart-loading">Loading your cart...</div>;
@@ -71,6 +116,11 @@ function Cart() {
             {/* Server error */}
             {serverError && (
                 <div className="cart-server-error">{serverError}</div>
+            )}
+
+            {/* Toast message */}
+            {message && (
+                <div className="cart-toast">{message}</div>
             )}
 
             {/* Empty cart */}
@@ -104,13 +154,45 @@ function Cart() {
                                     </p>
                                 </div>
 
-                                {/* NOTE TO AKSHAYA: Add remove button here */}
+                                <button
+                                    className="cart-remove-btn"
+                                    onClick={() => removeItem(item.productId)}
+                                >
+                                    Remove
+                                </button>
 
                             </div>
                         ))}
                     </div>
 
-                    {/* NOTE TO AKSHAYA: Add cart summary and checkout button here */}
+                    {/* Cart Summary */}
+                    <div className="cart-summary">
+                        <h3 className="cart-summary-title">Order Summary</h3>
+
+                        <div className="cart-summary-row">
+                            <span>Total Items</span>
+                            <span>{cart.totalItems}</span>
+                        </div>
+
+                        <div className="cart-summary-row cart-summary-total">
+                            <span>Subtotal</span>
+                            <span>${cart.subtotal}</span>
+                        </div>
+
+                        <button
+                            className="cart-checkout-btn"
+                            onClick={() => navigate('/orders')}
+                        >
+                            Proceed to Order →
+                        </button>
+
+                        <button
+                            className="cart-clear-btn"
+                            onClick={clearCart}
+                        >
+                            Clear Cart
+                        </button>
+                    </div>
 
                 </div>
             )}
