@@ -1,0 +1,245 @@
+/* Page wrapper */
+.orders-page {
+    padding: 1rem 2rem;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.orders-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FF6B00;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.orders-navbar-title {
+    color: #fff;
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.orders-navbar-right {
+    display: flex;
+    gap: 1rem;
+}
+
+.orders-nav-btn {
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #FF6B00;
+}
+
+.orders-nav-btn-outline {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Error & success */
+.orders-server-error {
+    background: #fee;
+    color: #c00;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+.orders-success {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Loading */
+.orders-loading {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+/* Section title */
+.orders-section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.5rem;
+}
+
+.orders-subtitle {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0 0 1rem;
+}
+
+/* Place order form */
+.place-order-form {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+}
+
+.orders-field {
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.orders-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.4rem;
+}
+
+.orders-input {
+    width: 100%;
+    padding: 0.65rem;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.orders-input:focus {
+    border-color: #FF6B00;
+}
+
+.orders-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.orders-place-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: #FF6B00;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.orders-place-btn:hover:not(:disabled) {
+    background: #e05f00;
+}
+
+.orders-place-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Empty state */
+.orders-empty {
+    text-align: center;
+    padding: 3rem;
+    color: #888;
+}
+
+.orders-shop-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    background: #FF6B00;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Orders list */
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Order card */
+.order-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.order-number {
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.25rem;
+    font-size: 0.95rem;
+}
+
+.order-date {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0;
+}
+
+.order-card-right {
+    text-align: right;
+}
+
+.order-status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.order-total {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #FF6B00;
+    margin: 0.25rem 0 0;
+}
+
+/* Order items */
+.order-items-list {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.order-item-line {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0.2rem 0;
+}
+
+.order-address {
+    font-size: 0.8rem;
+    color: #999;
+    margin: 0;
+}
