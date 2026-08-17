@@ -6,13 +6,19 @@ function Orders() {
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [placing, setPlacing] = useState(false);
     const [serverError, setServerError] = useState('');
+    const [message, setMessage] = useState('');
+    const [form, setForm] = useState({
+        shippingAddress: '',
+        shippingCity: '',
+        shippingState: ''
+    });
     const navigate = useNavigate();
 
     const userEmail = localStorage.getItem('userEmail');
     const token = localStorage.getItem('token');
 
-    // Check if logged in
     useEffect(() => {
         if (!token) {
             navigate('/login');
@@ -21,7 +27,6 @@ function Orders() {
         fetchOrders();
     }, []);
 
-    // Fetch all orders for this user from Order Service
     const fetchOrders = async () => {
         setLoading(true);
         try {
@@ -39,7 +44,6 @@ function Orders() {
             } else {
                 setServerError('Failed to load orders.');
             }
-
         } catch (error) {
             setServerError('Cannot connect to Order Service on port 8083.');
         } finally {
@@ -47,7 +51,74 @@ function Orders() {
         }
     };
 
-    // Status badge color
+    // Place order — fetches cart items first then calls Order Service
+    const handlePlaceOrder = async (e) => {
+        e.preventDefault();
+        setMessage('');
+        setServerError('');
+
+        if (!form.shippingAddress || !form.shippingCity) {
+            setServerError('Please fill in shipping address and city.');
+            return;
+        }
+
+        setPlacing(true);
+        try {
+            // Step 1 — Get cart items from Cart Service
+            const cartResponse = await fetch(`http://localhost:8082/api/cart/${userEmail}`, {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            const cartData = await cartResponse.json();
+
+            if (!cartData.items || cartData.items.length === 0) {
+                setServerError('Your cart is empty. Add items before placing an order.');
+                setPlacing(false);
+                return;
+            }
+
+            // Step 2 — Place order via Order Service
+            const orderResponse = await fetch('http://localhost:8083/api/orders/place', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    userEmail,
+                    shippingAddress: form.shippingAddress,
+                    shippingCity: form.shippingCity,
+                    shippingState: form.shippingState,
+                    items: cartData.items.map(i => ({
+                        productId: i.productId,
+                        quantity: i.quantity
+                    }))
+                })
+            });
+
+            const orderData = await orderResponse.json();
+
+            if (orderResponse.ok) {
+                // Step 3 — Clear the cart
+                await fetch(`http://localhost:8082/api/cart/${userEmail}/clear`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+
+                setMessage(`Order placed! Order number: ${orderData.orderNumber}`);
+                setForm({ shippingAddress: '', shippingCity: '', shippingState: '' });
+                fetchOrders(); // Refresh order list
+            } else {
+                setServerError(orderData.message || 'Failed to place order.');
+            }
+
+        } catch (error) {
+            setServerError('Cannot connect to services. Make sure all services are running.');
+        } finally {
+            setPlacing(false);
+        }
+    };
+
     const getStatusColor = (status) => {
         switch (status) {
             case 'PLACED': return '#F59E0B';
@@ -84,14 +155,69 @@ function Orders() {
                 <div className="orders-server-error">{serverError}</div>
             )}
 
-            {/* NOTE TO AKSHAYA: Add Place Order form here */}
+            {/* Success message */}
+            {message && (
+                <div className="orders-success">{message}</div>
+            )}
+
+            {/* Place Order Form */}
+            <div className="place-order-form">
+                <h3 className="orders-section-title">Place New Order</h3>
+                <p className="orders-subtitle">
+                    Items will be taken from your cart automatically
+                </p>
+
+                <form onSubmit={handlePlaceOrder}>
+                    <div className="orders-field">
+                        <label className="orders-label">Shipping Address</label>
+                        <input
+                            className="orders-input"
+                            type="text"
+                            placeholder="123 Main Street"
+                            value={form.shippingAddress}
+                            onChange={(e) => setForm({ ...form, shippingAddress: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="orders-row">
+                        <div className="orders-field">
+                            <label className="orders-label">City</label>
+                            <input
+                                className="orders-input"
+                                type="text"
+                                placeholder="Bloomington"
+                                value={form.shippingCity}
+                                onChange={(e) => setForm({ ...form, shippingCity: e.target.value })}
+                            />
+                        </div>
+                        <div className="orders-field">
+                            <label className="orders-label">State</label>
+                            <input
+                                className="orders-input"
+                                type="text"
+                                placeholder="IL"
+                                value={form.shippingState}
+                                onChange={(e) => setForm({ ...form, shippingState: e.target.value })}
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        className="orders-place-btn"
+                        type="submit"
+                        disabled={placing}
+                    >
+                        {placing ? 'Placing Order...' : 'Place Order →'}
+                    </button>
+                </form>
+            </div>
 
             {/* Order History */}
             <h3 className="orders-section-title">Order History</h3>
 
             {orders.length === 0 ? (
                 <div className="orders-empty">
-                    <p>No orders yet.</p>
+                    <p>No orders yet. Add items to cart and place your first order!</p>
                     <button
                         className="orders-shop-btn"
                         onClick={() => navigate('/products')}
