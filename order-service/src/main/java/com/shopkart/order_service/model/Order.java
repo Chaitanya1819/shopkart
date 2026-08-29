@@ -58,10 +58,10 @@ public class Order {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OrderItem> orderItems;
 
     // One order has many items
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderItem> orderItems;
 
     @PrePersist
     protected void onCreate() {
