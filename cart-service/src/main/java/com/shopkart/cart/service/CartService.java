@@ -7,6 +7,7 @@ import com.shopkart.cart.model.CartItem;
 import com.shopkart.cart.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -77,11 +78,12 @@ public class CartService {
                 .currency("USD")
                 .build();
     }
-
+    @Transactional
     public void removeItem(String userEmail, Long productId) {
         cartItemRepository.deleteByUserEmailAndProductId(userEmail, productId);
     }
 
+    @Transactional
     public void clearCart(String userEmail) {
         cartItemRepository.deleteByUserEmail(userEmail);
     }
