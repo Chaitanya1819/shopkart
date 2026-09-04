@@ -1,7 +1,7 @@
 package com.shopkart.payment_service.controller;
 
-import com.shopkart.payment.model.Payment;
-import com.shopkart.payment.service.PaymentService;
+import com.shopkart.payment_service.model.Payment;
+import com.shopkart.payment_service.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
